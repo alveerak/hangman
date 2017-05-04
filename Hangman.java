@@ -5,14 +5,16 @@ import.java.util.Scanner;
 public class Hangman {
   public static void main (String[] args) {
     String list[] = {"math", "science", "english"};
-    Scanner s = new Scanner(System.in);
+    //Scanner s = new Scanner(System.in);
     Random rand = new Random();
     
     int wrong = 0;
     String word = (list[rand.nextInt(list.length)]);
-    boolean a = true;
+    boolean a = false;
+    String guess = "";
     
-    while(wrong != 10) {
-      
-                   
+    while( != a) {
+      System.out.print("Enter your guess: ");
+      Scanner s = new Scanner(System.in);
+      guess = s.next
 }
