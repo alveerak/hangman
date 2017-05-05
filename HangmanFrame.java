@@ -2,10 +2,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class HangmanFrame extends Frame implements ActionListener {
-	private Label lbl;
-	private TextField tf;
-	private Button btn;
+import javax.swing.*;
+
+public class HangmanFrame extends JFrame implements ActionListener {
+	private JLabel lbl;
+	private JLabel guessedLetters;
+	private JTextField tf;
+	private JButton btn;
+	private JPanel draw;
 	private char l;
 	private int moves;
 
@@ -16,22 +20,27 @@ public class HangmanFrame extends Frame implements ActionListener {
 		Random r = new Random();
 		word = new HangmanWord(list[r.nextInt(list.length)]);
 		setLayout(new FlowLayout());
-
+		draw = new JPanel();
+		draw.setOpaque(true);
+		draw.add(new HangmanDrawing());
+		add(draw);
 		moves = 0;
 		
-		lbl = new Label();
+		guessedLetters = new JLabel("");
+		add(guessedLetters);
+		lbl = new JLabel();
 		lbl.setText(word.makeLabel());
 		lbl.setLocation(100, 100);
 		lbl.setSize(600, 200);;
-		lbl.setAlignment(Label.CENTER);
+		lbl.setAlignmentX(LEFT_ALIGNMENT);
 		add(lbl);
 
-		tf = new TextField("", 10);
+		tf = new JTextField("", 10);
 		tf.setLocation(100, 20);
 		tf.setEditable(true);
 		add(tf);
 
-		btn = new Button("Submit");
+		btn = new JButton("Submit");
 		add(btn);
 
 		btn.addActionListener(this);
@@ -44,6 +53,11 @@ public class HangmanFrame extends Frame implements ActionListener {
 
 	public static void main(String[] args) {
 		HangmanFrame app = new HangmanFrame();
+		
+	}
+	
+	public int getMoves(){
+		return moves;
 	}
 
 	public void actionPerformed(ActionEvent evt) {
@@ -54,10 +68,11 @@ public class HangmanFrame extends Frame implements ActionListener {
 		if(word.getWord().indexOf(l)>-1){
 			word.addLetter(l);
 			lbl.setText(word.makeLabel());
-			pack();
 		}
-		else
+		else{
 			moves++;
+			guessedLetters.setText(guessedLetters.getText()+l);
+		}
 		tf.setText("");
 		if (word.isComplete()&&moves<11){
 			btn.hide();
@@ -65,10 +80,11 @@ public class HangmanFrame extends Frame implements ActionListener {
 			lbl.setText("YOU WON!!!!");
 			lbl.setLocation(30, 100);
 			lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
-			pack();
 		}
 		else if (moves>=10) {
 			lbl.setText("YOU LOST!!!!");
 		}
+		draw.repaint();
+		pack();
 	}
 }
