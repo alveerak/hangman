@@ -67,5 +67,8 @@ public class HangmanFrame extends Frame implements ActionListener {
 			lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
 			pack();
 		}
+		else if (moves>=10) {
+			lbl.setText("YOU LOST!!!!");
+		}
 	}
 }
