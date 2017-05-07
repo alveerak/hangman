@@ -40,7 +40,7 @@ public class HangmanWord extends Word {
 		return presentLetters[index];
 	}
 	/**
-	*
+	* 
 	*/
 	public String makeLabel(){
 		String filling = "";
