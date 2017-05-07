@@ -15,15 +15,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HangmanDrawing extends JPanel  implements ActionListener {
-	private JLabel lbl;
-	private JLabel guessedLetters;
-	private JTextField tf;
-	private JButton btn;
-	private char l;
-	private int moves;
-	private String[] list = { "math", "science", "english" };
-	private HangmanWord word;
-	private boolean gameStarted;
+	private JLabel lbl; //displays the word being guessed with unguessed letters as blanks
+	private JLabel guessedLetters; //displays the incorrect letters guessed
+	private JTextField tf; //where letters are entered
+	private JButton btn; //submit button
+	private char l; //letter entered
+	private int moves; //number of incorrect moves done
+	private String[] list = { "math", "science", "english" }; //words randomly chosen for game
+	private HangmanWord word; //word object version of hangman word
+	private boolean gameStarted; //so that nothing is drawn when the drawing object is initially created
 	
 	
 	public HangmanDrawing() {
@@ -66,12 +66,16 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
         	drawDrawing(g);
         else
         	gameStarted = true;
-    }
+	}
 	
+	
+	//ALL DRAWING DONE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public void drawDrawing(Graphics g){
 		g.fillRect(50, 50, 50, 50);
 	}
-
+	//ALL DRAWING DONE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
+	
 	public void actionPerformed(ActionEvent evt) {
 		if(tf.getText().equals("")){
 			return;
