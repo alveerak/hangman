@@ -14,7 +14,7 @@ public class HangmanWord extends Word {
 		}
 	}
 	/**
-	* method 
+	* method that checks if presentLetters array contains any false values
 	*/
 	public boolean isComplete(){
 		for (int i = 0; i<letters.length; i++){
@@ -24,7 +24,8 @@ public class HangmanWord extends Word {
 		return true;
 	}
 	/**
-	*
+	* method that sets value of presentLetters to true if letters contains param a
+	* @param a - letter character to be checked
 	*/
 	public void addLetter (char a){
 		for (int i = 0; i<letters.length; i++){
