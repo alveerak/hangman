@@ -14,7 +14,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class HangmanDrawing extends JPanel  implements ActionListener {
 	private JLabel lbl;
 	private JLabel guessedLetters;
@@ -23,11 +22,13 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 	private char l;
 	private int moves;
 	private String[] list = { "math", "science", "english" };
-	HangmanWord word;
+	private HangmanWord word;
+	private boolean gameStarted;
 	
 	
 	public HangmanDrawing() {
 		Random r = new Random();
+		gameStarted=false;
 		moves = 0;
 		word = new HangmanWord(list[r.nextInt(list.length)]);
 		setLayout(new FlowLayout());
@@ -58,6 +59,18 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 		setPreferredSize(new Dimension(500, 100));
 		moves = 0;
 	}
+	
+	public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (gameStarted)
+        	drawDrawing(g);
+        else
+        	gameStarted = true;
+    }
+	
+	public void drawDrawing(Graphics g){
+		g.fillRect(50, 50, 50, 50);
+	}
 
 	public void actionPerformed(ActionEvent evt) {
 		if(tf.getText().equals("")){
@@ -71,6 +84,7 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 		else{
 			moves++;
 			guessedLetters.setText(guessedLetters.getText()+l);
+			repaint();
 		}
 		tf.setText("");
 		if (word.isComplete()&&moves<11){
