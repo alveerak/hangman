@@ -1,5 +1,5 @@
 /**
-* Word is an abstract class which 
+* Word is an abstract class  
 * 
 */
 public abstract class Word {
