@@ -1,5 +1,5 @@
 /**
-* class extends the abstract class Word
+* class extends the abstract class Word and provides Hangman game specifications
 */
 public class HangmanWord extends Word {
 	/**
@@ -35,7 +35,8 @@ public class HangmanWord extends Word {
 		}
 	}
 	/**
-	*
+	* checks if a character at a certain index is a letter in the word
+	* @param index - index of character to be checked
 	*/
 	public boolean isLetter(int index){
 		return presentLetters[index];
