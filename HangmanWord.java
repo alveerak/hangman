@@ -53,7 +53,7 @@ public class HangmanWord extends Word {
 			else
 				filling+="_ ";
 		}
-		return filling;
+		return filling; 
 	}
 
 }
