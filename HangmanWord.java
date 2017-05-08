@@ -35,14 +35,15 @@ public class HangmanWord extends Word {
 		}
 	}
 	/**
-	* checks if a character at a certain index is a letter in the word
+	* method checks if a character at a certain index has been guessed already
 	* @param index - index of character to be checked
 	*/
 	public boolean isLetter(int index){
 		return presentLetters[index];
 	}
 	/**
-	* 
+	* method adds the guessed letter to String filling if it is in the correct word
+	* else it adds a dash
 	*/
 	public String makeLabel(){
 		String filling = "";
