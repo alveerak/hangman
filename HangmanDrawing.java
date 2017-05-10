@@ -13,6 +13,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Scanner;
+import java.io.IOException;
 
 public class HangmanDrawing extends JPanel  implements ActionListener {
 	private JLabel lbl; //displays the word being guessed with unguessed letters as blanks
@@ -21,7 +24,15 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 	private JButton btn; //submit button
 	private char l; //letter entered
 	private int moves; //number of incorrect moves done
-	private String[] list = { "math", "science", "english" }; //words randomly chosen for game
+	
+	// below are related to the list of words (spells)
+	private String[] list; // words randomly chosen for game
+	private final String FILE_NAME = "spells.txt"; // name of file containing												// guess words (spells)
+	private final int NUM_SPELLS = 91; // number of spells in file
+	private int wordIndex; // index of word randomly chosen in list
+	private String[] spellTypes; // type of spell (curse, charm, etc.)
+	private String[] spellDescriptions; // what the spell does
+	
 	private HangmanWord word; //word object version of hangman word
 	private boolean gameStarted; //so that nothing is drawn when the drawing object is initially created
 	
@@ -30,7 +41,11 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 		Random r = new Random();
 		gameStarted=false;
 		moves = 0;
-		word = new HangmanWord(list[r.nextInt(list.length)]);
+		
+		initializeLists();
+		wordIndex = r.nextInt(list.length);
+		word = new HangmanWord(list[wordIndex].toLowerCase());
+		
 		setLayout(new FlowLayout());
 		setVisible(true);
 		this.setSize(600, 500);
@@ -94,7 +109,8 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 		if (word.isComplete()&&moves<11){
 			btn.hide();
 			tf.hide();
-			lbl.setText("YOU WON!!!!");
+			lbl.setText("YOU WON!!!! " + spellTypes[wordIndex] + " casted. "
+					+ spellDescriptions[wordIndex]);
 			lbl.setLocation(30, 100);
 			lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		}
@@ -103,7 +119,32 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 			tf.hide();
 			lbl.setLocation(30, 100);
 			lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
-			lbl.setText("YOU LOST!!!!");
+			lbl.setText("YOU LOST!!!! The spell was "+ word.getWord()+".");
+		}
+	}
+	
+	/**
+	 * Initializes list to spell names, initializes spellTypes and
+	 * spellDescriptions
+	 * 
+	 */
+	private void initializeLists() {
+		try {
+
+			Scanner in = new Scanner(new File(FILE_NAME));
+			int index = 0;
+			list = new String[NUM_SPELLS];
+			spellTypes = new String[NUM_SPELLS];
+			spellDescriptions = new String[NUM_SPELLS];
+			while (in.hasNextLine()) {
+				list[index] = in.nextLine();
+				spellTypes[index] = in.nextLine();
+				spellDescriptions[index] = in.nextLine();
+				index++;
+			}
+
+		} catch (IOException e) {
+			System.out.println("File not found.");
 		}
 	}
 }
