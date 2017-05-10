@@ -26,6 +26,7 @@ public class HangmanFrame extends JFrame{
 	*/
 	public static void main(String[] args) {
 		HangmanFrame app = new HangmanFrame();
+	
 	}
 	
 }
