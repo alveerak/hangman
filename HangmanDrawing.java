@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
-* 
+* class implemenents all GUI elements and runs the graphics of the Hangman Game
 */
 public class HangmanDrawing extends JPanel  implements ActionListener {
 	private JLabel lbl; //displays the word being guessed with unguessed letters as blanks
