@@ -48,6 +48,8 @@ public class HangmanWord extends Word {
 	public String makeLabel(){
 		String filling = "";
 		for (int i = 0; i<getWord().length(); i++){
+			if(letters[i] == ' ') 
+				presentLetters[i] = true; 
 			if(presentLetters[i]==true)
 				filling+=letters[i]+" ";
 			else
