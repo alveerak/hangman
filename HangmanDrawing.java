@@ -23,6 +23,7 @@ import java.io.IOException;
 public class HangmanDrawing extends JPanel  implements ActionListener {
 	private JLabel lbl; //displays the word being guessed with unguessed letters as blanks
 	private JLabel guessedLetters; //displays the incorrect letters guessed
+	private JLabel clue; // displays clue after after 5 incorrect guesses
 	private JTextField tf; //where letters are entered
 	private JButton btn; //submit button
 	private char l; //letter entered
@@ -57,12 +58,19 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 		
 		guessedLetters = new JLabel("");
 		add(guessedLetters);
+		
 		lbl = new JLabel();
 		lbl.setText(word.makeLabel());
 		lbl.setLocation(100, 100);
 		lbl.setSize(600, 200);;
 		lbl.setAlignmentX(LEFT_ALIGNMENT);
 		add(lbl);
+		
+		clue = new JLabel();
+		clue.setLocation(100, 150);
+		clue.setSize(600, 200);;
+		clue.setAlignmentX(LEFT_ALIGNMENT);
+		add(clue);
 
 		tf = new JTextField("", 10);
 		tf.setLocation(100, 20);
@@ -111,13 +119,14 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 			moves++;
 			guessedLetters.setText(guessedLetters.getText()+l);
 			repaint();
+			if (moves > 4)
+				clue.setText(spellDescriptions[wordIndex]);
 		}
 		tf.setText("");
 		if (word.isComplete()&&moves<11){
 			btn.hide();
 			tf.hide();
-			lbl.setText("YOU WON!!!! " + spellTypes[wordIndex] + " casted. "
-					+ spellDescriptions[wordIndex]);
+			lbl.setText("YOU WON!!!! " + list[wordIndex] + " casted. ");
 			lbl.setLocation(30, 100);
 			lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		}
