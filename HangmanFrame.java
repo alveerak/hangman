@@ -22,7 +22,7 @@ public class HangmanFrame extends JFrame{
         	setVisible(true);
 	}
 	/**
-	* main method which creates object app of the class
+	* main method which creates object app of the Hangman class
 	*/
 	public static void main(String[] args) {
 		HangmanFrame app = new HangmanFrame();
