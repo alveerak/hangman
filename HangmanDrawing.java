@@ -161,6 +161,17 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 
 		} catch (IOException e) {
 			System.out.println("File not found.");
-		}
+		}	
+	}
+	
+	/**
+	* resets the game
+	*/
+	public void reset(){
+		
+		
 	}
 }
+
+
+
