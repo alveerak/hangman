@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.text.NumberFormat;
 
 /**
@@ -86,15 +87,13 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 		setPreferredSize(new Dimension(500, 100));
 		moves = 0;
 
-		remain = 6000;
-
+		remain = 60000;
 		//create JLabel to display remaining time
 		label = new JLabel();
 		label.setSize(600, 200);
 		label.setLocation(300, 300);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label);
-		//		add(label, BorderLayout.CENTER);
 
 		format = NumberFormat.getNumberInstance();
 		format.setMinimumIntegerDigits(0); 
@@ -187,17 +186,11 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 		}	
 	}
 
-	/**
-	 * Starts the timer
-	 */
 	public void start() { 
 		update = System.currentTimeMillis();
 		time.start();
 	} 
 
-	/**
-	 * Update the displayed time. This method is called from actionPerformed().
-	 */
 	public void updateDisplay() {
 		long now = System.currentTimeMillis(); //current time in ms
 		long elapsed = now - update; //ms elapsed since last update
