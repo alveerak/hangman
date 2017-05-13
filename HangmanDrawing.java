@@ -44,7 +44,7 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 	private NumberFormat format; //in seconds
 
 	/**
-	 * Constructor creates a Random object 
+	 * Constructor creates a Random object and initializes the private variables
 	 */
 	public HangmanDrawing() {
 		Random r = new Random();
@@ -122,6 +122,8 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 	//ALL DRAWING DONE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	/**
+	 * 
+	 * Prints the according text if game is won or lost
 	 * 
 	 */
 	public void actionPerformed(ActionEvent evt) {
