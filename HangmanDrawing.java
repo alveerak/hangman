@@ -68,11 +68,11 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		moves = 0;
 
 		initializeLists();
-		// word = (HangmanWord)list.get(r.nextInt(list.size()));
 		word = (HangmanWord) list.get(91);
 
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setVisible(true);
+		setBackground(new Color(225, 215, 178));
 		this.setSize(900, 800);
 		
 		guessedLetters = new JLabel("");
@@ -133,6 +133,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 					word.addLetter(l);
 					lbl.setText(word.makeLabel());
 					remain += 15000;
+					//imagePanel.repaint();
 				} else {
 					wrongGuess();
 				}
@@ -144,8 +145,9 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 			} else if (moves >= MAX_MOVES) {
 				lose();
 			}
-
+			
 		}
+		imagePanel.repaint();
 	}
 
 	/**
@@ -180,13 +182,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 
 		//stops the count down when it hits 0
 		if (remain <= 0) {
-			time.stop();
-			btn.hide();
-			tf.hide();
-			timeLabel.setVisible(false);
-			lbl.setLocation(30, 100);
-			lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
-			lbl.setText(word.getLostMessage());
+			lose();
 		}
 	}
 	
@@ -231,6 +227,8 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		imagePanel.repaint();
 		btn.setText("Submit");
 		remain = MAX_SECS;
+		imagePanel.setMoves(0);
+		imagePanel.repaint();
 		this.start();
 	}
 
@@ -246,7 +244,8 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 	}
 
 	private void win() {
-		tf.hide();
+		tf.setVisible(false);
+		imagePanel.repaint();
 		lbl.setText(word.getWonMessage());
 		lbl.setLocation(30, 100);
 		btn.setText("New Game");
@@ -254,9 +253,9 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 	}
 
 	private void lose() {
-		tf.hide();
+		tf.setVisible(false);
+		imagePanel.repaint();
 		lbl.setLocation(30, 100);
-		// lbl.setFont(new Font("Calibri", Font.BOLD, 30));
 		lbl.setText(word.getLostMessage());
 		btn.setText("New Game");
 		time.stop();
