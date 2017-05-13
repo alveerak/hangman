@@ -135,14 +135,14 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 			String wordString = word.getWord(word.getLength() - 1);
 
 			if (tf.getText().length() > 1) {
-				if (tf.getText().equals(wordString) && moves < MAX_MOVES + 1) {
+				if (tf.getText().toLowerCase().equals(wordString) && moves < MAX_MOVES + 1) {
 					win();
 				} else {
 					wrongGuess();
 					tf.setText("");
 				}
 			} else {
-				l = tf.getText().charAt(0);
+				l = tf.getText().toLowerCase().charAt(0);
 
 				if (wordString.indexOf(l) > -1) {
 					rightGuess();
@@ -322,7 +322,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		add(wordPanel);
 
 		guessPanel = new JPanel();
-		guessPanel.setPreferredSize(new Dimension(300, 500));
+		guessPanel.setPreferredSize(new Dimension(300, 300));
 		guessPanel.setLayout(new FlowLayout());
 		guessPanel.setBackground(new Color(225, 215, 178));
 		guessPanel.add(guessedLetters);
@@ -332,7 +332,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 
 		cluePanel = new JPanel();
 		cluePanel.setLayout(new FlowLayout());
-		cluePanel.setPreferredSize(new Dimension(300, 50));
+		cluePanel.setPreferredSize(new Dimension(300, 30));
 		cluePanel.setBackground(new Color(225, 215, 178));
 		cluePanel.add(clue);
 		cluePanel.setVisible(true);
