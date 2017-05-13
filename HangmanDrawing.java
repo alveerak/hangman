@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import java.awt.Color;
@@ -23,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Scanner;
 import java.io.IOException;
+import java.net.URL;
 import java.text.NumberFormat;
 
 /**
@@ -30,7 +30,7 @@ import java.text.NumberFormat;
  */
 public class HangmanDrawing extends JPanel implements ActionListener {
 	private JLabel lbl; // displays the word being guessed with unguessed
-						// letters as blanks
+	// letters as blanks
 	private JLabel guessedLetters; // displays the incorrect letters guessed
 	private JLabel clue; // displays clue after after 5 incorrect guesses
 	private JTextField tf; // where letters are entered
@@ -38,16 +38,16 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 	private char l; // letter entered
 	private int moves; // number of incorrect moves done
 	private final int MAX_MOVES = 12; // max number of incorrect moves before
-										// player loses
+	// player loses
 
 	// below are related to the list of words (spells)
 	private ArrayList<Word> list; // words randomly chosen for game
 	private final String FILE_NAME = "spells.txt"; // name of file containing
-													// guess words (spells)
+	// guess words (spells)
 
 	// count down variables
 	private final double MAX_SECS = 60000; // maximum time player has to win the
-											// game in milliseconds
+	// game in milliseconds
 	private double remain = MAX_SECS; // how many sec left in count down.
 	private long update; // count last updated
 	private JLabel timeLabel; // displays count
@@ -56,15 +56,19 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 
 	private HangmanWord word; // word object version of hangman word
 	private Random r = new Random(); // random object to choose a random game
-										// word
+	// word
 
-	private JPanel submitPanel, wordPanel, textPanel, guessPanel, cluePanel; // various
-																				// panels
-																				// of
-																				// game
-																				// screen
+	private JPanel submitPanel, wordPanel, textPanel, guessPanel, cluePanel; // various panels of the game screen
 	private ImagePanel imagePanel; // panel of game screen that contains
-									// "hangman" wizard image
+	// "hangman" wizard image
+
+	// instance variables related to inspirational images
+	private JLabel photo = new JLabel();
+	private ArrayList<ImageIcon> motivationImages;
+	private ArrayList<ImageIcon> congratsImages;
+	private ArrayList<ImageIcon> wonImages;
+	private ArrayList<ImageIcon> lostImages;
+	private ImageIcon defaultImage;
 
 	/**
 	 * Constructor to initialize all necessary instance variables: JFrame
@@ -99,9 +103,12 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		tf.setVisible(true);
 
 		btn = new JButton("Submit");
-		// btn.setLocation(125, 20);
 		add(btn);
 		btn.addActionListener(this);
+
+		makePhotos();
+		photo = new JLabel(defaultImage); // change to default image
+		photo.setVisible(true);
 
 		addPanels();
 		time();
@@ -116,7 +123,8 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 			updateDisplay();
 		} else {
 			// checks if new game is clicked
-			if (lbl.getText().equals(word.getWonMessage()) || lbl.getText().equals(word.getLostMessage())) {
+			if (lbl.getText().equals(word.getWonMessage())
+					|| lbl.getText().equals(word.getLostMessage())) {
 				reset();
 			}
 
@@ -137,9 +145,8 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 				l = tf.getText().charAt(0);
 
 				if (wordString.indexOf(l) > -1) {
-					word.addLetter(l);
-					lbl.setText(word.makeLabel());
-					remain += 7000;
+					rightGuess();
+
 				} else {
 					wrongGuess();
 				}
@@ -207,7 +214,8 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 				list.add(new SpellWord(spellName, spellDescription));
 			}
 			ArrayList<String> normals = new ArrayList<String>();
-			normals.addAll(Arrays.asList("owl", "frog", "wand", "potion", "herbology", "divination", "broomstick"));
+			normals.addAll(Arrays.asList("owl", "frog", "wand", "potion",
+					"herbology", "divination", "broomstick"));
 
 			Iterator iter = normals.iterator();
 			while (iter.hasNext()) {
@@ -235,7 +243,19 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		imagePanel.repaint();
 		btn.setText("Submit");
 		remain = MAX_SECS;
+		photo.setIcon(defaultImage);
 		this.start();
+	}
+
+	/**
+	 * private helper method to update game display when user makes an incorrect
+	 * guess
+	 */
+	private void rightGuess() {
+		word.addLetter(l);
+		lbl.setText(word.makeLabel());
+		remain += 7000;
+		photo.setIcon(congratsImages.get((int) (Math.random() * congratsImages.size())));
 	}
 
 	/**
@@ -251,6 +271,8 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		imagePanel.repaint();
 		if (moves > MAX_MOVES / 2)
 			clue.setText("Hint: " + word.getHint());
+		photo.setIcon(motivationImages
+				.get((int) (Math.random() * motivationImages.size())));
 	}
 
 	/**
@@ -263,6 +285,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		lbl.setLocation(30, 100);
 		btn.setText("New Game");
 		time.stop();
+		photo.setIcon(wonImages.get((int) (Math.random() * wonImages.size())));
 	}
 
 	/**
@@ -272,10 +295,10 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		tf.setVisible(false);
 		imagePanel.repaint();
 		lbl.setLocation(30, 100);
-		// lbl.setFont(new Font("Calibri", Font.BOLD, 30));
 		lbl.setText(word.getLostMessage());
 		btn.setText("New Game");
 		time.stop();
+		photo.setIcon(lostImages.get((int) (Math.random() * lostImages.size())));
 	}
 
 	/**
@@ -299,10 +322,11 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		add(wordPanel);
 
 		guessPanel = new JPanel();
-		guessPanel.setPreferredSize(new Dimension(300, 50));
+		guessPanel.setPreferredSize(new Dimension(300, 500));
 		guessPanel.setLayout(new FlowLayout());
 		guessPanel.setBackground(new Color(225, 215, 178));
 		guessPanel.add(guessedLetters);
+		guessPanel.add(photo);
 		guessPanel.setVisible(true);
 		add(guessPanel);
 
@@ -339,5 +363,51 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		time = new Timer(0, this);
 		time.setInitialDelay(0);
 		this.start();
+	}
+
+	/**
+	 * Private helper method to initialize ArrayList of inspirational images
+	 */
+	private void makePhotos() {
+		defaultImage = new ImageIcon("yungharry.jpg");
+		Image dim = defaultImage.getImage();
+		defaultImage.setImage(dim.getScaledInstance(dim.getWidth(null) / 2, dim
+				.getHeight(null) / 2, BufferedImage.TYPE_INT_ARGB));
+		
+		
+		motivationImages = new ArrayList<ImageIcon>();
+		congratsImages = new ArrayList<ImageIcon>();
+		wonImages = new ArrayList<ImageIcon>();
+		lostImages = new ArrayList<ImageIcon>();
+		ArrayList<String> photoNames = new ArrayList<String>();
+		photoNames
+				.addAll(Arrays.asList("congrats2.jpg", "congrats3.jpg",
+						"congrats4.jpg", "congrats5.jpg", "congrats6.jpg", "motivation1.jpg",
+						"motivation2.jpg", "motivation3.jpg", "motivation4.jpg",
+						"motivation5.jpg", "motivation6.jpg", "motivation7.jpg", "lost1.jpg",
+						"lost2.jpg", "won1.jpg", "won2.jpg"));
+
+		try {
+
+			// add pics
+			for (String s : photoNames) {
+				ImageIcon i = new ImageIcon(s);
+				Image im = i.getImage();
+				i.setImage(im.getScaledInstance(im.getWidth(null) / 2, im
+						.getHeight(null) / 2, BufferedImage.TYPE_INT_ARGB));
+				if (s.indexOf("congrats") == 0) {
+					congratsImages.add(i);
+				} else if (s.indexOf("motivation") == 0) {
+					motivationImages.add(i);
+				} else if (s.indexOf("won") == 0) {
+					wonImages.add(i);
+				} else {
+					lostImages.add(i);
+				}
+			}
+
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		}
 	}
 }
