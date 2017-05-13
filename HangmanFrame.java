@@ -1,6 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -15,12 +20,13 @@ public class HangmanFrame extends JFrame{
 	public HangmanFrame() {
 		a = new HangmanDrawing();
 		add(a);
-        	setResizable(true);
-        	setTitle("Hangman");
-        	setSize(800, 700);
-        	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        	setVisible(true);
-	}
+        setTitle("Hangman");
+        setSize(900, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setBackground(new Color(225, 215, 178));
+        
+    }
 	/**
 	* main method which creates object app of the Hangman class
 	*/
