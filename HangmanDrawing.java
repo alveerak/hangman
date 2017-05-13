@@ -45,7 +45,8 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 													// guess words (spells)
 
 	// count down variables
-	private double REMAIN = 6000000;; // how many sec left in count down.
+	private final double MAX_SECS = 60000;
+	private double remain = MAX_SECS; // how many sec left in count down.
 	private long update; // count last updated
 	private JLabel timeLabel; // displays count
 	private Timer time; // updates count every second
@@ -131,6 +132,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 				if (wordString.indexOf(l) > -1) {
 					word.addLetter(l);
 					lbl.setText(word.makeLabel());
+					remain += 15000;
 				} else {
 					wrongGuess();
 				}
@@ -169,15 +171,15 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 	public void updateDisplay() {
 		long now = System.currentTimeMillis(); //current time in ms
 		long elapsed = now - update; //ms elapsed since last update
-		REMAIN -= elapsed; //adjust remaining time
+		remain -= elapsed; //adjust remaining time
 		update = now; //remember new update time
 
 		//convert remaining ms to ss format and display
-		int sec = (int)((REMAIN) / 1000);
+		int sec = (int)((remain) / 1000);
 		timeLabel.setText(format.format(sec));
 
 		//stops the count down when it hits 0
-		if (REMAIN <= 0) {
+		if (remain <= 0) {
 			time.stop();
 			btn.hide();
 			tf.hide();
@@ -225,7 +227,11 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		clue.setText("");
 		guessedLetters.setText("");
 		tf.setVisible(true);
+		imagePanel.setMoves(0);
+		imagePanel.repaint();
 		btn.setText("Submit");
+		remain = MAX_SECS;
+		this.start();
 	}
 
 	private void wrongGuess() {
