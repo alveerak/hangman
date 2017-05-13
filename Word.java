@@ -16,13 +16,19 @@ public abstract class Word {
 	public abstract void addLetter(char a);
 	/**
 	* method returns the word from the letters
-	* 
+	* @param n - index of last letter desired
 	*/
-	public String getWord(){
-		String a = "";
+	public String getWord(int n){
+		/*String a = "";
 		for (int i = 0; i<letters.length; i++)
 			a+=letters[i];
 		return a;
+		*/
+		if(n == 0) {
+			return ""+letters[0];
+		} else {
+			return getWord(n-1) + letters[n];
+		}
 	}
 	/** 
 	* method returns a letter at a certain index
@@ -30,5 +36,13 @@ public abstract class Word {
 	*/
 	public char getLetter(int index){
 		return letters[index];
+	}
+	
+	/**
+	 * method returns length of word
+	 * @return length of word
+	 */
+	public int getLength() {
+		return letters.length;
 	}
 }
