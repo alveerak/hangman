@@ -96,7 +96,7 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 	
 	//ALL DRAWING DONE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	/**
-	*
+	* 
 	*/
 	public void drawDrawing(Graphics g){
 		g.fillRect(50, 50, 50, 50);
@@ -104,7 +104,7 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 	//ALL DRAWING DONE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
 	/**
-	*
+	* 
 	*/
 	public void actionPerformed(ActionEvent evt) {
 		if(tf.getText().equals("")){
@@ -130,7 +130,7 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 			lbl.setLocation(30, 100);
 			lbl.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		}
-		else if (moves>=10){
+		else if (moves>=7){
 			btn.hide();
 			tf.hide();
 			lbl.setLocation(30, 100);
