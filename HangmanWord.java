@@ -47,7 +47,7 @@ public class HangmanWord extends Word {
 	*/
 	public String makeLabel(){
 		String filling = "";
-		for (int i = 0; i<getWord().length(); i++){
+		for (int i = 0; i<getWord(letters.length -1).length(); i++){
 			if(letters[i] == ' ') 
 				presentLetters[i] = true; 
 			if(presentLetters[i]==true)
@@ -56,6 +56,18 @@ public class HangmanWord extends Word {
 				filling+="_ ";
 		}
 		return filling; 
+	}
+	
+	public String getHint() {
+		return "No hint for this one! Keep trying.";
+	}
+	
+	public String getWonMessage() {
+		return "YOU WON!";
+	}
+	
+	public String getLostMessage() {
+		return "YOU LOST!";
 	}
 
 }
