@@ -263,6 +263,7 @@ public class HangmanDrawing extends JPanel  implements ActionListener {
 
 		//convert remaining ms to ss format and display
 		int sec = (int)((remain) / 1000);
+		label.setFont(new Font(label.getFont().getName(), Font.PLAIN, 20));
 		label.setText(format.format(sec));
 
 		//stops the count down when it hits 0
