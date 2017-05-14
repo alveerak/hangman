@@ -79,7 +79,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		moves = 0;
 
 		initializeLists();
-		word = (HangmanWord) list.get(91);
+		word = (HangmanWord) list.get(r.nextInt(list.size()));
 
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setVisible(true);
@@ -87,6 +87,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 		this.setSize(900, 800);
 
 		guessedLetters = new JLabel("");
+		guessedLetters.setFont(new Font(guessedLetters.getFont().getName(), Font.PLAIN, 15));
 		guessedLetters.setVisible(true);
 
 		lbl = new JLabel();
@@ -254,7 +255,7 @@ public class HangmanDrawing extends JPanel implements ActionListener {
 	private void rightGuess() {
 		word.addLetter(l);
 		lbl.setText(word.makeLabel());
-		remain += 7000;
+		remain += 5000;
 		photo.setIcon(congratsImages.get((int) (Math.random() * congratsImages.size())));
 	}
 
