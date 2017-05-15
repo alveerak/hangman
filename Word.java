@@ -1,5 +1,5 @@
 /**
-* Word is an abstract class  
+* Word is an abstract class that represents a word made up of letters and possibly spaces
 * 
 */
 public abstract class Word {
@@ -19,11 +19,6 @@ public abstract class Word {
 	* @param n - index of last letter desired
 	*/
 	public String getWord(int n){
-		/*String a = "";
-		for (int i = 0; i<letters.length; i++)
-			a+=letters[i];
-		return a;
-		*/
 		if(n == 0) {
 			return ""+letters[0];
 		} else {
