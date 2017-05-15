@@ -57,15 +57,25 @@ public class HangmanWord extends Word {
 		}
 		return filling; 
 	}
-	
+	/**
+	 * returns default hint (no hint)
+	 * @return hint
+	 */
 	public String getHint() {
 		return "No hint for this one! Keep trying.";
 	}
-	
+	/**
+	 * returns default win message
+	 * @return win
+	 */
 	public String getWonMessage() {
 		return "YOU WON!";
 	}
 	
+	/**
+	 * returns default lose message
+	 * @return lose
+	 */
 	public String getLostMessage() {
 		return "YOU LOST!";
 	}
